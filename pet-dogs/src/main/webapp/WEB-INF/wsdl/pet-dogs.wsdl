@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="pet-dogs"
+	targetNamespace="http://service.web.soap.dog.pets.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://service.web.soap.dog.pets.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<!-- Importing my XSD here first element of WSDL is =types importing XSD 
+		into my WSDL -->
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://service.web.soap.dog.pets.com/"
+				schemaLocation="dogs.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+
+	<!-- Definition message for the web service -->
+	<!-- Define input parameter class uploadDogRequest{ tns:uploadDog pdog; 
+		} -->
+	<wsdl:message name="uploadDogRequest">
+		<wsdl:part name="pdog" element="tns:uploadDog" />
+	</wsdl:message>
+
+	<!-- class uploadDogResponse{ private tns:stringResponse rstring; } -->
+	<wsdl:message name="uploadDogResponse">
+		<wsdl:part name="rstring" element="tns:stringResponse" />
+	</wsdl:message>
+
+	
+	<!-- assignment for delete and update -->
+	<wsdl:message name="deleteDogRequest">
+		<wsdl:part name="deleteDog" element="tns:deleteDog" />
+	</wsdl:message>
+
+	<wsdl:message name="deleteDogResponse">
+		<wsdl:part name="rstring" element="tns:stringResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="updateDogRequest">
+		<wsdl:part name="updateDog" element="tns:updateDog" />
+	</wsdl:message>
+
+	<wsdl:message name="updateDogResponse">
+		<wsdl:part name="rstring" element="tns:stringResponse" />
+	</wsdl:message>
+
+
+	<!-- Entry made by shibu 12/26/13 -->
+
+	<wsdl:message name="findAllDogsRequest">
+		<wsdl:part name="findAllDogsRequestParam" element="tns:findAllDogsInputParam" />
+	</wsdl:message>
+
+	<wsdl:message name="findAllDogsResponse">
+		<wsdl:part name="findAllDogsResponseParam" element="tns:findAllDogsOutputParam" />
+	</wsdl:message>
+
+	<wsdl:message name="findDogByIdRequest">
+		<wsdl:part name="findDogByIdRequestParam" element="tns:findDogByIdInputParam" />
+	</wsdl:message>
+
+	<wsdl:message name="findDogByIdResponse">
+		<wsdl:part name="findDogByIdResponseParam" element="tns:findDogByIdOutputParam" />
+	</wsdl:message>
+
+	<!-- end of entry made by shibu -->
+
+
+
+
+	<!-- public class SoapDogFault extends Exception { /** * Java type that 
+		goes as soapenv:Fault detail element. * */ private DogFault faultInfo; -->
+	<wsdl:message name="SoapDogFault">
+		<wsdl:part name="faultInfo" element="tns:dogFault" />
+	</wsdl:message>
+	
+	
+
+	<wsdl:portType name="DogSoapWebService">
+		<wsdl:documentation>This method will help to load dog information
+		</wsdl:documentation>
+		<wsdl:operation name="addDog">
+			<wsdl:input message="tns:uploadDogRequest" />
+			<wsdl:output message="tns:uploadDogResponse" />
+			<!-- throws -->
+			<wsdl:fault name="soapDogFault" message="tns:SoapDogFault" />
+		</wsdl:operation>
+
+	<!-- assignment for delete and update -->
+		<wsdl:operation name="deleteDog">
+			<wsdl:input message="tns:deleteDogRequest" />
+			<wsdl:output message="tns:deleteDogResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="updateDog">
+			<wsdl:input message="tns:updateDogRequest" />
+			<wsdl:output message="tns:updateDogResponse" />
+		</wsdl:operation>
+
+		<!-- Entry by shibu on 12/26/13 -->
+		
+		<wsdl:operation name="findAllDogs">
+			<wsdl:input message="tns:findAllDogsRequest" />
+			<wsdl:output message="tns:findAllDogsResponse" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="findDogById">
+			<wsdl:input message="tns:findDogByIdRequest" />
+			<wsdl:output message="tns:findDogByIdResponse" />
+		</wsdl:operation>
+		
+		<!-- End of entry by shibu -->
+		
+		
+		
+	</wsdl:portType>
+
+	<!-- 1 . define the protocol to invoke a web service operation 2. It also 
+		define the actual message format which will be exchanged in the web service -->
+	<wsdl:binding name="DogSoapWebServiceBinding" type="tns:DogSoapWebService">
+		<!-- Below line is fixed for http protocol style="document/rpc" use="literal/encoded" -->
+		  	<!-- <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+			URI="#Sign" /> -->
+			 <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#UsernameToken"/> 
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="addDog">
+			<wsdl:documentation>protocol and style used to invoke this method
+			</wsdl:documentation>
+			<soap:operation soapAction="http://service.web.soap.dog.pets.com/addDog" />
+			<wsdl:input>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:output>
+			<wsdl:fault name="soapDogFault">
+				<soap:fault name="soapDogFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		
+		<!-- assignment for delete and update -->
+		
+		<wsdl:operation name="deleteDog">
+			
+			<soap:operation soapAction="http://service.web.soap.dog.pets.com/deleteDog" />
+			<wsdl:input>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="updateDog">
+			
+			<soap:operation soapAction="http://service.web.soap.dog.pets.com/updateDog" />
+			<wsdl:input>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<!-- Entry made by shibu on 12/26/13 -->
+		
+		<wsdl:operation name="findAllDogs">
+			<soap:operation soapAction="http://service.web.soap.dog.pets.com/findAllDogs" />
+			<wsdl:input>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="findDogById">
+			<soap:operation soapAction="http://service.web.soap.dog.pets.com/findDogById" />
+			<wsdl:input>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<!-- End of entry nade by shibu -->
+		
+		
+	</wsdl:binding>
+
+	<!-- Web Service -->
+	<wsdl:service name="DogSoapWebEndpoint">
+		<wsdl:documentation></wsdl:documentation>
+		<wsdl:port name="DogSoapWebServicePort" binding="tns:DogSoapWebServiceBinding">
+			<soap:address location="http://localhost:8090/pet-dogs/dogWebService" />
+		</wsdl:port>
+	</wsdl:service>
+	
+	
+
+	
+	
+	<!-- Policy for first signing and then encrypting all messages, with the 
+		certificate included in the message from client to server but only a thumbprint 
+		on messages from the server to the client. -->
+	<wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="Sign">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding
+					xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict />
+							</wsp:Policy>
+						</sp:Layout>
+						<sp:IncludeTimestamp />
+						<sp:OnlySignEntireHeadersAndBody />
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				<sp:SignedParts
+					xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:Body />
+				</sp:SignedParts>
+			<!-- 	<sp:EncryptedParts
+					xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:Body />
+				</sp:EncryptedParts>  -->
+				<wsss:KeyStore alias="serverkey"
+					keypass="com.pets.dog.keystore.KeystoreAccess" location="server.keystore"
+					storepass="nosecret" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+					wspp:visibility="private" xmlns:wsss="http://schemas.sun.com/2006/03/wss/server" />
+				<wsss:TrustStore location="server.keystore"
+					storepass="nosecret" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+					wspp:visibility="private" xmlns:wsss="http://schemas.sun.com/2006/03/wss/server" />
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	
+	
+	<!-- 
+	  Policy for Username Token with plaintext password, sent from client to
+    server only2222222222 
+    -->
+  <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UsernameToken">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"/>
+          </wsp:Policy>
+        </sp:SupportingTokens>
+      
+        <sc:ValidatorConfiguration xmlns:sc="http://schemas.sun.com/2006/03/wss/server" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy" wspp:visibility="private">
+          <sc:Validator classname="com.pets.dog.keystore.PasswordValidator" name="usernameValidator"/>
+        </sc:ValidatorConfiguration>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+
+</wsdl:definitions>	

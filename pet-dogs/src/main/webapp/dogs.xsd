@@ -1,0 +1,120 @@
+<xs:schema xmlns:tns="http://service.web.soap.dog.pets.com/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://service.web.soap.dog.pets.com/">
+
+	<!-- instantiating the XSD element -->
+	<xs:element name="dogForm" type="tns:dogForm" />
+	<xs:element name="dogFormWrapper" type="tns:dogFormWrapper" />
+	<xs:element name="findDogsInput" type="tns:findDogsInput" />
+	<xs:element name="findDogsResponse" type="tns:findDogsResponse" />
+	<xs:element name="uploadDog" type="tns:PDog" />
+	<xs:element name="stringResponse" type="tns:stringResponse" />
+	<xs:element name="dogFault" type="tns:DogFault" />
+	<!-- assignment for delete and update-->
+	<xs:element name="deleteDog" type="tns:deleteDog" />
+	<xs:element name="updateDog" type="tns:updateDog" />
+	
+	
+
+
+	<!-- Entry made by shibu on 12/26/13 -->
+
+	<xs:element name="findAllDogsInputParam" type="tns:findDogsInput" />
+	<xs:element name="findAllDogsOutputParam" type="tns:findAllDogOutput" />
+	<xs:element name="findDogByIdInputParam" type="xs:int" />
+	<xs:element name="findDogByIdOutputParam" type="tns:dogForm" />
+
+
+	<xs:complexType name="findAllDogOutput">
+		<xs:sequence>
+			<xs:element name="dogForms" type="tns:dogForm" nillable="true"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- assignment for delete and update -->
+	<xs:complexType name="deleteDog">
+		<xs:sequence>
+			<xs:element name="delete" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="updateDog">
+		<xs:sequence>
+			<xs:element name="update" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- End of entry made by shibu -->
+	
+	
+	
+	
+	
+
+
+	<!-- definition when we do not pass any parameter or passing blank parameter -->
+	<xs:complexType name="findDogsInput">
+		<xs:sequence />
+	</xs:complexType>
+
+	<!-- Here we are giving definition to the XSD element used in the project -->
+	<xs:complexType name="findDogsResponse">
+		<xs:sequence>
+			<xs:element name="return" type="tns:dogFormWrapper"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="dogFormWrapper">
+		<xs:sequence>
+			<xs:element name="dogForms" type="tns:dogForm" nillable="true"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="indexChanged" type="xs:boolean" />
+			<xs:element name="totalCount" type="xs:int" />
+			<xs:element name="totalPages" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="dogForm">
+		<xs:sequence>
+			<xs:element name="address" type="xs:string" minOccurs="0" />
+			<xs:element name="breed" type="xs:string" minOccurs="0" />
+			<xs:element name="color" type="xs:string" minOccurs="0" />
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:element name="did" type="xs:int" />
+			<xs:element name="dob" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="email" type="xs:string" minOccurs="0" />
+			<xs:element name="image" type="xs:base64Binary" minOccurs="0" />
+			<xs:element name="imageId" type="xs:string" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="owner" type="xs:string" minOccurs="0" />
+			<xs:element name="price" type="xs:string" minOccurs="0" />
+			<xs:element name="sex" type="xs:string" minOccurs="0" />
+			<xs:element name="title" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PDog">
+		<xs:sequence>
+			<xs:element name="arg0" type="tns:dogForm" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="stringResponse">
+		<xs:sequence>
+			<xs:element name="return" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Defining message for soap fault -->
+	<xs:complexType name="DogFault">
+		<xs:sequence>
+			<xs:element name="faultInfo" type="xs:string" />
+			<xs:element name="message" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

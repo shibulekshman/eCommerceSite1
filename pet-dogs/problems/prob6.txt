@@ -1,0 +1,17 @@
+
+When restful web service is accessed and object is not in database then we are getting below error
+
+Exception in thread "main" org.springframework.web.client.RestClientException: Cannot extract response: no Content-Type found
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:66)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:619)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:446)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:401)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:377)
+	at com.json.client.FindDogByDID.main(FindDogByDID.java:48)
+
+	
+	
+		ResponseEntity<DogForm> result = restTemplate.exchange("http://localhost:8090/pet-dogs/apps/dog/18", HttpMethod.GET,
+				entity, DogForm.class);
+		System.out.println(result.getBody());

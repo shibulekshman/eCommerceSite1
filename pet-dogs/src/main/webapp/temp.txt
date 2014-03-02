@@ -1,0 +1,11 @@
+<a href="#"><img src="images/templatemo_gallery_photo_1.jpg"
+						alt="Gallery Image" border="0" />
+					</a> <a href="#"><img src="images/templatemo_gallery_photo_2.jpg"
+						alt="Gallery Image" border="0" />
+					</a> <a href="#"><img src="images/templatemo_gallery_photo_3.jpg"
+						alt="Gallery Image" border="0" />
+					</a> <a href="#"><img src="images/templatemo_gallery_photo_4.jpg"
+						alt="Gallery Image" border="0" />
+					</a> <a href="#"><img src="images/templatemo_gallery_photo_5.jpg"
+						alt="Gallery Image" border="0" />
+					</a>

@@ -1,0 +1,24 @@
+WARNING: GET request for "http://localhost:8090/pet-dogs/all/dogs.htm" resulted in 406 (Not Acceptable); invoking error handler
+Exception in thread "main" org.springframework.web.client.HttpClientErrorException: 406 Not Acceptable
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:75)
+	at org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:486)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:443)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:401)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:377)
+	at com.json.client.FindAllDogs.main(FindAllDogs.java:34)
+	
+	
+	Forget to apply 
+	@XmlRootElement Annotation
+	
+	
+	ResponseEntity<DogFormWrapper> result = restTemplate.exchange("http://localhost:8090/pet-dogs/apps/all/dogs", HttpMethod.GET,
+	entity, DogFormWrapper.class);
+	
+	Note : Here I was using 
+	
+	"http://localhost:8090/pet-dogs/all/dogs.htm instead of
+	
+	"http://localhost:8090/pet-dogs/apps/all/dogs
+	
+	

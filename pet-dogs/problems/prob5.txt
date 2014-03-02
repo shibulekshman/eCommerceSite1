@@ -1,0 +1,40 @@
+public class UserEntity {
+
+    @Id
+    @Column (name = "email", nullable = false)
+    private String email;
+
+	@Column (name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column (name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column (name = "password", nullable = false)
+    private String password;
+	
+	//This cannot be null ,we have to set it manually before persisting into the database
+    @Column (name = "created_on", nullable = false)
+    private Date createdOn;
+    
+  }  
+
+org.hibernate.PropertyValueException: not-null property references a null or transient value: com.pets.dog.dao.hibernate.entity.UserEntity.createdOn
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:103)
+	at org.hibernate.action.internal.AbstractEntityInsertAction.nullifyTransientReferencesIfNotAlready(AbstractEntityInsertAction.java:132)
+	at org.hibernate.action.internal.AbstractEntityInsertAction.makeEntityManaged(AbstractEntityInsertAction.java:141)
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:220)
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:194)
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:142)
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:329)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:286)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:192)
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:135)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:206)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:191)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:114)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:90)
+	at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:735)
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:727)
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:723)
+	at com.pets.dog.dao.base.AbstractDaoImpl.saveOrUpdate(AbstractDaoImpl.java:39)
